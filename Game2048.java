@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bulenkov.game2048;
+//package com.bulenkov.game2048;
 
 import javax.swing.*;
 import java.awt.*;
