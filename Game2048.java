@@ -273,11 +273,13 @@ public class Game2048 /*extends JPanel*/{
     private int sense(int moveVal) {
         for (int i=0; i<4; i++){
             Tile[] line = getline(i);
-            if (senseLine(line) == true) {
+            if (lineSense(line) == true) {
                 return moveVal;
             }
         }
-        return 0;
+        Random randMove = new Random();
+        int move = randMove.nextInt(4);
+        return move;
     }
     /*Returns trye if anything can be combined in any 4 of the lines */ 
     private boolean lineSense(Tile[] oldLine){
@@ -288,6 +290,31 @@ public class Game2048 /*extends JPanel*/{
             }
         }
         return false;
+    }
+    
+    private int senseLeft() {
+        return sense(3);
+    }
+    
+    private int senseRight() {
+        myTiles = rotate(180);
+        int senseVal = sense(1);
+        myTiles = rotate(180);
+        return senseVal;
+    }
+    
+    private int senseUp() {
+        myTiles = rotate(270);
+        int senseVal = sense(0);
+        myTiles = rotate(90);
+        return senseVal;
+    }
+    
+    private int senseDown() {
+        myTiles = rotate(90);
+        int senseVal = sense(2);
+        myTiles = rotate(270);
+        return senseVal;
     }
 
 
