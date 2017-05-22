@@ -267,6 +267,28 @@ public class Game2048 /*extends JPanel*/{
     private void setLine(int index, Tile[] re) {
         System.arraycopy(re, 0, myTiles, index * 4, 4);
     }
+    
+    
+    /*We will be doing everything by sensing to the left. For each sense, we will rotate properly, then check sense, then rotate the board back */
+    private int sense(int moveVal) {
+        for (int i=0; i<4; i++){
+            Tile[] line = getline(i);
+            if (senseLine(line) == true) {
+                return moveVal;
+            }
+        }
+        return 0;
+    }
+    /*Returns trye if anything can be combined in any 4 of the lines */ 
+    private boolean lineSense(Tile[] oldLine){
+        for (int i = 0; i < 4 && !oldLine[i].isEmpty(); i++) {
+            int num = oldLine[i].value;
+            if (i < 3 && oldLine[i].value == oldLine[i + 1].value) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 /*
