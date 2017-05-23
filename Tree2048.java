@@ -66,16 +66,20 @@ public class Tree2048{
                 }
             }
             case "right":{
-                return Game2048.senseRight();
+//                return Game2048.senseRight();
+                return 1;
             }
             case "left":{
-                return Game2048.senseLeft();
+//                return Game2048.senseLeft();
+                return 3;
             }
             case "up":{
-                return Game2048.senseUp();
+//                return Game2048.senseUp();
+                return 0;
             }
             case "down":{
-                return Game2048.senseDown();
+//                return Game2048.senseDown();
+                return 2;
             }
             }
         return random.nextInt(3);
@@ -84,19 +88,19 @@ public class Tree2048{
     public String printTree() {
         switch(this.value) {
             case "+":{
-                return left.printTree() + "+" + right.printTree();
+                return left.printTree() + " " + "+" + " " + right.printTree();
             }
             case "-":{
-                return left.printTree() + "-" + right.printTree();
+                return left.printTree() + " " + "-" + " " + right.printTree();
             }  
             case "max":{
-                return left.printTree() + "max" + right.printTree();
+                return left.printTree() + " " + "max" + " " + right.printTree();
             }  
             case "min":{
-                return left.printTree() + "min" + right.printTree();
+                return left.printTree() + " " + "min" + " " + right.printTree();
             }  
             case "rand":{
-                return left.printTree() + "rand" + right.printTree();
+                return left.printTree() + " " + "rand" + " " + right.printTree();
             }
             case "right": {
                 return "right";
