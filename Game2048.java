@@ -38,7 +38,7 @@ public class Game2048 /*extends JPanel*/{
     private static final int TILES_MARGIN = 16;
     */
 
-    private Tile[] myTiles;
+    private static Tile[] myTiles;
     boolean myWin = false;
     boolean myLose = false;
     int myScore = 0;
@@ -129,7 +129,7 @@ public class Game2048 /*extends JPanel*/{
         myTiles = rotate(270);
     }
 
-    private Tile tileAt(int x, int y) {
+    private static Tile tileAt(int x, int y) {
         return myTiles[x + y * 4];
     }
 
@@ -187,7 +187,7 @@ public class Game2048 /*extends JPanel*/{
         return true;
     }
 
-    private Tile[] rotate(int angle) {
+    private static Tile[] rotate(int angle) {
         Tile[] newTiles = new Tile[4 * 4];
         int offsetX = 3, offsetY = 3;
         if (angle == 90) {
@@ -256,7 +256,7 @@ public class Game2048 /*extends JPanel*/{
         }
     }
 
-    private Tile[] getLine(int index) {
+    private static Tile[] getLine(int index) {
         Tile[] result = new Tile[4];
         for (int i = 0; i < 4; i++) {
             result[i] = tileAt(i, index);
@@ -270,9 +270,9 @@ public class Game2048 /*extends JPanel*/{
     
     
     /*We will be doing everything by sensing to the left. For each sense, we will rotate properly, then check sense, then rotate the board back */
-    private int sense(int moveVal) {
+    private static int sense(int moveVal) {
         for (int i=0; i<4; i++){
-            Tile[] line = getline(i);
+            Tile[] line = getLine(i);
             if (lineSense(line) == true) {
                 return moveVal;
             }
@@ -282,7 +282,7 @@ public class Game2048 /*extends JPanel*/{
         return move;
     }
     /*Returns trye if anything can be combined in any 4 of the lines */ 
-    private boolean lineSense(Tile[] oldLine){
+    private static boolean lineSense(Tile[] oldLine){
         for (int i = 0; i < 4 && !oldLine[i].isEmpty(); i++) {
             int num = oldLine[i].value;
             if (i < 3 && oldLine[i].value == oldLine[i + 1].value) {
@@ -292,25 +292,25 @@ public class Game2048 /*extends JPanel*/{
         return false;
     }
     
-    private int senseLeft() {
+    public static int senseLeft() {
         return sense(3);
     }
     
-    private int senseRight() {
+    public static int senseRight() {
         myTiles = rotate(180);
         int senseVal = sense(1);
         myTiles = rotate(180);
         return senseVal;
     }
     
-    private int senseUp() {
+    public static int senseUp() {
         myTiles = rotate(270);
         int senseVal = sense(0);
         myTiles = rotate(90);
         return senseVal;
     }
     
-    private int senseDown() {
+    public static int senseDown() {
         myTiles = rotate(90);
         int senseVal = sense(2);
         myTiles = rotate(270);
@@ -384,9 +384,9 @@ public class Game2048 /*extends JPanel*/{
     */
 
 
-    private static int offsetCoors(int arg) {
-        return arg * (TILES_MARGIN + TILE_SIZE) + TILES_MARGIN;
-    }
+//    private static int offsetCoors(int arg) {
+//        return arg * (TILES_MARGIN + TILE_SIZE) + TILES_MARGIN;
+//    }
 
     static class Tile {
         int value;
