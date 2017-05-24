@@ -456,6 +456,34 @@ public class Game2048 /*extends JPanel*/{
             return new Color(0xcdc1b4);
         }
     }
+    
+     public Prisoner tournamentSelect(Prisoner[] curpop){
+        shufflePop(curpop);
+        Prisoner best = null;
+        for (int i = 0; i < selParam; i++){
+            if (best == null) {
+                best = curpop[i];
+            }
+            else if (best.getScore() < curpop[i].getScore()) {
+                best = curpop[i];
+            }
+        }
+        best = (Prisoner)best.clone();
+        return best;
+    }
+	
+    public void shufflePop(Prisoner[] curpop) {
+        int randIndex;
+        Prisoner curIndex;
+        Prisoner cur;
+        Random random = new Random();
+        for (int i = curpop.length - 1; i > 0; i--){
+            randIndex = random.nextInt(i + 1);
+            curIndex = curpop[randIndex];
+            curpop[randIndex] = curpop[i];
+            curpop[i] = curIndex;
+        }
+    }
 
     public static void main(String[] args) {
         
@@ -484,6 +512,8 @@ public class Game2048 /*extends JPanel*/{
         }
         int avgScore = sumScores/100;
         System.out.println(avgScore);
+        
+        Average over 1 million games was 1095
         */
         
 
