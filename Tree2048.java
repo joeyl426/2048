@@ -1,9 +1,10 @@
 import java.util.*;
 
-public class Tree2048{
+public class Tree2048 implements Cloneable{
    String value;
    Tree2048 left, right;
-    Random random = new Random();
+   Random random = new Random();
+   int score;
 
    public Tree2048(String value)
    {
@@ -15,7 +16,21 @@ public class Tree2048{
       this.value = value;
       this.left = left;
       this.right = right;
-   } 
+   }
+    
+    public Object clone ()
+    {
+        Object self = null;
+        try
+        {
+            self = super.clone();
+        }
+        catch(CloneNotSupportedException e)
+        {
+            throw new RuntimeException("CloneNotSupportedException");
+        }
+        return self;
+    }
 
    // Getter & setter for the value.
    public String getValue(){
@@ -26,6 +41,12 @@ public class Tree2048{
    // Getters & setters for left & right nodes.
    public Tree2048 getLeft(){
       return left;}
+   public int getScore() {
+       return score;
+   }
+    public void setScore(int newScore) {
+       score = newScore;
+   }
    public Tree2048 getRight(){
       return right;}
    public void setLeft(Tree2048 ln){
@@ -108,42 +129,41 @@ public class Tree2048{
         return random.nextInt(4);
     }
     
-    public void mutate(Tree2048 t){
-        System.out.println("\nCurrent: " + t.value + "\n");
+    public Tree2048 mutate(Tree2048 t, int rate){
         if(!(t.value.equals("right")) && !(t.value.equals("left")) && !(t.value.equals("up")) && !(t.value.equals("down"))) {
-           System.out.println("Got into if statement: " + t.value);
             int wayChoice = random.nextInt(2);
             if (wayChoice == 1){
-                mutate(t.left);
+                mutate(t.left,rate);
             }
             else {
-                mutate(t.right);
+                mutate(t.right,rate);
             }
         }
         else{
             int alter = random.nextInt(100);
-            if (alter < 100) {
+            if (alter < rate) {
                 int altered = random.nextInt(4);
                 switch(altered){
                     case 0: {
                         t.value = "up";
-                        return;
+                        return t;
                     }
                     case 1: {
                         t.value = "right";
-                        return;
+                        return t;
                     }
                     case 2: {
                         t.value = "down";
-                        return;
+                        return t;
                     }
                     case 3: {
                         t.value = "left";
-                        return;
+                        return t;
                     }
                 }
             }
         }
+        return t;
     }
     
     public void postOrder(Tree2048 root) {

@@ -109,6 +109,7 @@ public class Game2048 /*extends JPanel*/{
 
             if (!myWin && !canMove()) {
                 myLose = true;
+                
             }
         }
     }
@@ -349,6 +350,10 @@ public class Game2048 /*extends JPanel*/{
         return senseVal;
     }
 
+        
+    public int getMyScore() {
+        return myScore;
+    }
 
 /*
     @Override
@@ -457,43 +462,25 @@ public class Game2048 /*extends JPanel*/{
         }
     }
     
-     public Tree2048 tournamentSelect(Tree2048[] curpop){
-        shufflePop(curpop);
-        Tree2048 best = null;
-        for (int i = 0; i < selParam; i++){
-            if (best == null) {
-                best = curpop[i];
-            }
-            else if (best.getScore() < curpop[i].getScore()) {
-                best = curpop[i];
-            }
+    public Tree2048[] runGeneration(Tree2048[] pop,Game2048 game) {
+        for (int i = 0; i< pop.length; i++){
+            game.treeMove(pop[i]);
+            pop[i].setScore(myScore);
+            game.resetGame();
         }
-        best = (Tree2048)best.clone();
-        return best;
+        return pop;
     }
-	
-    public void shufflePop(Tree2048[] curpop) {
-        int randIndex;
-        Tree2048 curIndex;
-        Tree2048 cur;
-        Random random = new Random();
-        for (int i = curpop.length - 1; i > 0; i--){
-            randIndex = random.nextInt(i + 1);
-            curIndex = curpop[randIndex];
-            curpop[randIndex] = curpop[i];
-            curpop[i] = curIndex;
-        }
-    }
+    
 
     public static void main(String[] args) {
-        
+        Breeder2048 breedNew = new Breeder2048();
+        Tree2048[] population = breedNew.createPopulation();
         Game2048 game2048 = new Game2048();
-        TreeGenerator tg = new TreeGenerator();
-        Tree2048 t = tg.create(5);
-        
-        game2048.treeMove(t);
-        System.out.println(game2048.myScore);
-        
+        population = game2048.runGeneration(population,game2048);
+        population = breedNew.breed(population);
+        for (int i = 0; i<population.length; i++){
+            System.out.println(population[i].getScore());
+        }
     }
         
         
@@ -517,6 +504,4 @@ public class Game2048 /*extends JPanel*/{
         */
         
 
-       
-    }
 }
