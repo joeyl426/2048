@@ -18,7 +18,9 @@ public class TreeGenerator {
     }
     
     public static void main(String[] args) {
-        Tree2048 tree = create(5);        
+        Tree2048 tree = create(5);
+        tree.inOrder(tree);
+
     }
 
 }

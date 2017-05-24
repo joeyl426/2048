@@ -145,6 +145,15 @@ public class Tree2048{
         }
     }
     
+    public void inOrder(Tree2048 root) {
+      if(root !=  null) {
+           inOrder(root.left);
+           //Visit the node by Printing the node data  
+           System.out.print(root.value + " ");
+           inOrder(root.right);
+      }
+    }
+    
     public String printTree() {
         switch(this.value) {
             case "+":{
