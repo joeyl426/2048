@@ -82,7 +82,7 @@ public class Tree2048{
                 }
             }
             case "rand":{
-                if (random.nextInt(9) < 6) {
+                if (random.nextInt(10) < 5) {
                     return left.evaluate();
                 }
                 else {
@@ -106,13 +106,12 @@ public class Tree2048{
                 return 2;
             }
             }
-        return random.nextInt(3);
+        return random.nextInt(4);
         }
     
     public void mutate(){
-        System.out.println(this.value);
-        if ((this.value != "right") || (this.value != "left") || (this.value != "up") || (this.value != "down")) {
-            int wayChoice = random.nextInt(1);
+        if ((this.value != "right") && (this.value != "left") && (this.value != "up") && (this.value != "down")) {
+            int wayChoice = random.nextInt(2);
             if (wayChoice == 1){
                 left.mutate();
             }
@@ -121,21 +120,25 @@ public class Tree2048{
             }
         }
         else{
-            int alter = random.nextInt(99);
+            int alter = random.nextInt(100);
             if (alter < 5) {
-                int altered = random.nextInt(3);
+                int altered = random.nextInt(4);
                 switch(altered){
                     case 0: {
                         this.value = "up";
+                        return;
                     }
                     case 1: {
                         this.value = "right";
+                        return;
                     }
                     case 2: {
                         this.value = "down";
+                        return;
                     }
                     case 3: {
                         this.value = "left";
+                        return;
                     }
                 }
             }
