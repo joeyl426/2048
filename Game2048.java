@@ -82,6 +82,38 @@ public class Game2048 /*extends JPanel*/{
         }
 
     }
+    
+        public void treeMove(Tree2048 t) {
+        while(!myLose){    
+            if (!canMove()) {
+                myLose = true;
+            }
+            if(!myLose){
+                int move = t.evaluate();
+                switch(move){
+                    case 0:
+                        up();
+                        break;
+                    case 1:
+                        right();
+                        break;
+                    case 2:
+                        down();
+                        break;
+                    case 3:
+                        left();
+                        break;
+
+                }
+            }
+
+            if (!myWin && !canMove()) {
+                myLose = true;
+            }
+        }
+    }
+    
+    
 
     public void resetGame() {
         myScore = 0;
@@ -426,15 +458,20 @@ public class Game2048 /*extends JPanel*/{
     }
 
     public static void main(String[] args) {
+        
+        Game2048 game2048 = new Game2048();
+        TreeGenerator tg = new TreeGenerator();
+        Tree2048 t = tg.create(5);
+        
+        game2048.treeMove(t);
+        System.out.println(game2048.myScore);
+        
+        
+        
+        
+        
+        
         /*
-        JFrame game = new JFrame();
-        game.setTitle("2048 Game");
-        game.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        game.setSize(340, 400);
-        game.setResizable(false);
-        */
-
-
         int sumScores = 0;
         for(int i = 0; i < 100; i++){
             Game2048 game2048 = new Game2048();
@@ -447,11 +484,9 @@ public class Game2048 /*extends JPanel*/{
         }
         int avgScore = sumScores/100;
         System.out.println(avgScore);
+        */
         
 
-        /*
-        game.setLocationRelativeTo(null);
-        game.setVisible(true);
-        */
+       
     }
 }

@@ -90,24 +90,23 @@ public class Tree2048{
                 }
             }
             case "right":{
-//                return Game2048.senseRight();
-                return 1;
+                return Game2048.senseRight();
+               
             }
             case "left":{
-//                return Game2048.senseLeft();
-                return 3;
+                return Game2048.senseLeft();
+                
             }
             case "up":{
-//                return Game2048.senseUp();
-                return 0;
+                return Game2048.senseUp();
+                
             }
             case "down":{
-//                return Game2048.senseDown();
-                return 2;
+                return Game2048.senseDown();
             }
-            }
-        return random.nextInt(4);
         }
+        return random.nextInt(4);
+    }
     
     public void mutate(Tree2048 t){
         System.out.println("\nCurrent: " + t.value + "\n");
