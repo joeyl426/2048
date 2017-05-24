@@ -457,9 +457,9 @@ public class Game2048 /*extends JPanel*/{
         }
     }
     
-     public Prisoner tournamentSelect(Prisoner[] curpop){
+     public Tree2048 tournamentSelect(Tree2048[] curpop){
         shufflePop(curpop);
-        Prisoner best = null;
+        Tree2048 best = null;
         for (int i = 0; i < selParam; i++){
             if (best == null) {
                 best = curpop[i];
@@ -468,14 +468,14 @@ public class Game2048 /*extends JPanel*/{
                 best = curpop[i];
             }
         }
-        best = (Prisoner)best.clone();
+        best = (Tree2048)best.clone();
         return best;
     }
 	
-    public void shufflePop(Prisoner[] curpop) {
+    public void shufflePop(Tree2048[] curpop) {
         int randIndex;
-        Prisoner curIndex;
-        Prisoner cur;
+        Tree2048 curIndex;
+        Tree2048 cur;
         Random random = new Random();
         for (int i = curpop.length - 1; i > 0; i--){
             randIndex = random.nextInt(i + 1);
@@ -494,7 +494,7 @@ public class Game2048 /*extends JPanel*/{
         game2048.treeMove(t);
         System.out.println(game2048.myScore);
         
-        
+    }
         
         
         
