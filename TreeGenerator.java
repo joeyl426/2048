@@ -19,10 +19,10 @@ public class TreeGenerator {
     
     public static void main(String[] args) {
         Tree2048 tree = create(5);
-        System.out.println(tree.printTree());
+        tree.inOrder(tree);
 //        System.out.println(tree.evaluate());
-        tree.mutate();
-        System.out.println(tree.printTree());
+        //tree.mutate();
+ //       tree.inOrder(tree);
 //        System.out.println(tree.evaluate());
         
     }
