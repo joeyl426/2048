@@ -35,11 +35,35 @@ public class Tree2048{
     
     public int evaluate(){
         switch(this.value) {
-            case "+":{
-                return left.evaluate() + right.evaluate();
+            case "+":{ 
+                int sum = left.evaluate() + right.evaluate();
+                if ((sum > 3) || (sum < 0)){
+                    sum = sum % 3;
+                    if (sum < 0){
+                        return sum + 2;
+                    }
+                    else {
+                        return sum;
+                    }
+                }
+                else{
+                    return sum;
+                }
             }
             case "-":{
-                return left.evaluate() - right.evaluate();
+                int sum = left.evaluate() - right.evaluate();
+                if ((sum > 3) || (sum < 0)){
+                    sum = sum % 3;
+                    if (sum < 0){
+                        return sum + 2;
+                    }
+                    else{
+                        return sum;
+                    }
+                }
+                else{
+                    return sum;
+                }
             }
             case "min":{
                 if (left.evaluate() < right.evaluate()) {
@@ -84,6 +108,39 @@ public class Tree2048{
             }
         return random.nextInt(3);
         }
+    
+    public void mutate(){
+        System.out.println(this.value);
+        if ((this.value != "right") || (this.value != "left") || (this.value != "up") || (this.value != "down")) {
+            int wayChoice = random.nextInt(1);
+            if (wayChoice == 1){
+                left.mutate();
+            }
+            else {
+                right.mutate();
+            }
+        }
+        else{
+            int alter = random.nextInt(99);
+            if (alter < 5) {
+                int altered = random.nextInt(3);
+                switch(altered){
+                    case 0: {
+                        this.value = "up";
+                    }
+                    case 1: {
+                        this.value = "right";
+                    }
+                    case 2: {
+                        this.value = "down";
+                    }
+                    case 3: {
+                        this.value = "left";
+                    }
+                }
+            }
+        }
+    }
     
     public String printTree() {
         switch(this.value) {
