@@ -109,35 +109,37 @@ public class Tree2048{
         return random.nextInt(4);
         }
     
-    public void mutate(){
-        if ((this.value != "right") && (this.value != "left") && (this.value != "up") && (this.value != "down")) {
+    public void mutate(Tree2048 t){
+        System.out.println("\nCurrent: " + t.value + "\n");
+        if(!(t.value.equals("right")) && !(t.value.equals("left")) && !(t.value.equals("up")) && !(t.value.equals("down"))) {
+           System.out.println("Got into if statement: " + t.value);
             int wayChoice = random.nextInt(2);
             if (wayChoice == 1){
-                left.mutate();
+                mutate(t.left);
             }
             else {
-                right.mutate();
+                mutate(t.right);
             }
         }
         else{
             int alter = random.nextInt(100);
-            if (alter < 5) {
+            if (alter < 100) {
                 int altered = random.nextInt(4);
                 switch(altered){
                     case 0: {
-                        this.value = "up";
+                        t.value = "up";
                         return;
                     }
                     case 1: {
-                        this.value = "right";
+                        t.value = "right";
                         return;
                     }
                     case 2: {
-                        this.value = "down";
+                        t.value = "down";
                         return;
                     }
                     case 3: {
-                        this.value = "left";
+                        t.value = "left";
                         return;
                     }
                 }
@@ -145,13 +147,20 @@ public class Tree2048{
         }
     }
     
-    public void inOrder(Tree2048 root) {
-      if(root !=  null) {
-           inOrder(root.left);
-           //Visit the node by Printing the node data  
-           System.out.print(root.value + " ");
-           inOrder(root.right);
-      }
+    public void postOrder(Tree2048 root) {
+      
+           if (root == null)
+            return;
+ 
+        // first recur on left subtree
+        postOrder(root.left);
+ 
+        // then recur on right subtree
+        postOrder(root.right);
+ 
+        // now deal with the node
+        System.out.print(root.value + " ");  
+      
     }
     
     public String printTree() {
