@@ -488,16 +488,19 @@ public class Game2048 /*extends JPanel*/{
         }
     }
     
-    public Tree2048[] runGeneration(Tree2048[] pop, Game2048 game) {
+    public Tree2048[] runGeneration(Tree2048[] pop, Game2048 game, int numGames) {
         for (int i = 0; i< pop.length; i++){
             int sumScore = 0;
-//            for(int j = 0; j < 3; j++){
+            int sumMaxTile = 0;
+            for(int j = 0; j < numGames; j++){
                 game.treeMove(pop[i]);
                 sumScore += myScore;
+                sumMaxTile += game.getMaxTile();
                 game.resetGame();
-//            }
-//            pop[i].setScore(sumScore/3);
-            pop[i].setScore(sumScore);
+            }
+            pop[i].setScore(sumScore/numGames);
+            pop[i].setMaxTile(sumMaxTile/numGames);
+//            pop[i].setScore(sumScore);
         }
         return pop;
     }
@@ -514,8 +517,8 @@ public class Game2048 /*extends JPanel*/{
         breedNew.printPop(population);
         
         Game2048 game2048 = new Game2048();
-        for(int i = 0; i < 50; i++){
-            population = game2048.runGeneration(population,game2048);
+        for(int i = 0; i < 25; i++){
+            population = game2048.runGeneration(population,game2048, 10);
             population = breedNew.breed(population);
             
             /*
@@ -525,11 +528,15 @@ public class Game2048 /*extends JPanel*/{
             }
             */
             
-            System.out.println("\n\nGeneration " + (i + 1) + "\n -------------");
+            System.out.println("\n\n Generation " + (i + 1) + "\n---------------");
             System.out.print("Best individual:\n");
             breedNew.getBest(population).printTree(breedNew.getBest(population));
-            System.out.println("\nBest score: " + breedNew.getBest(population).getScore() + "\n");
+            System.out.println("\nScore: " + breedNew.getBest(population).getScore());
+            System.out.println("Best tile: " + breedNew.getBest(population).getMaxTile() + "\n");
         }
+        
+        System.out.println("Final pop: \n");
+        breedNew.printPop(population);
         
     }
         

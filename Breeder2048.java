@@ -2,14 +2,15 @@ import java.util.*;
 
 public class Breeder2048{
     
-    private int mutateP,crossP,selParam,popSize;
+    private int mutateP,crossP,selParam,popSize,treeDepth;
     private Random random = new Random();
     
     public Breeder2048() {
-        mutateP = 75;
+        mutateP = 10;
         crossP = 5;
-        selParam = 3;
+        selParam = 7;
         popSize = 50;
+        treeDepth = 7;
     }
 
     public Tree2048 tournamentSelect(Tree2048[] curpop, int selection){
@@ -56,7 +57,7 @@ public class Breeder2048{
         Tree2048[] curpop = new Tree2048[popSize];
         TreeGenerator tg = new TreeGenerator();
         for(int i = 0; i < popSize; i++){
-            Tree2048 t = tg.create(5);
+            Tree2048 t = tg.create(treeDepth);
             t.setDepth(depth(t,1));
             t.setScore(0);
             t.setMaxTile(2);
