@@ -489,17 +489,16 @@ public class Game2048 /*extends JPanel*/{
     }
     
     public Tree2048[] runGeneration(Tree2048[] pop, Game2048 game) {
-        System.out.println("gothere");
         for (int i = 0; i< pop.length; i++){
             int sumScore = 0;
-            for(int j = 0; j < 3; j++){
+//            for(int j = 0; j < 3; j++){
                 game.treeMove(pop[i]);
                 sumScore += myScore;
                 game.resetGame();
-            }
-            pop[i].setScore(sumScore/3);
+//            }
+//            pop[i].setScore(sumScore/3);
+            pop[i].setScore(sumScore);
         }
-        System.out.println("gothere1");
         return pop;
     }
     
@@ -525,11 +524,13 @@ public class Game2048 /*extends JPanel*/{
                 System.out.print("" + population[j].getScore() + " ");
             }
             */
-            System.out.println("\nBest: " + breedNew.getBest(population).getScore());
+            
+            System.out.println("\n\nGeneration " + (i + 1) + "\n -------------");
+            System.out.print("Best individual:\n");
+            breedNew.getBest(population).printTree(breedNew.getBest(population));
+            System.out.println("\nBest score: " + breedNew.getBest(population).getScore() + "\n");
         }
         
-        System.out.println("Final pop: \n");
-        breedNew.printPop(population);
     }
         
         

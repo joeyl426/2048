@@ -191,5 +191,25 @@ public class Tree2048 implements Cloneable{
         System.out.print(root.value + " ");  
 
     }
+    
+    public void printTree(Tree2048 node)
+    {
+        printNode(node, 0);
+    }
+
+    private void printNode(Tree2048 node, int indentation)
+    {
+        // Print the value to the console/file/whatever
+        // This prefixes the value with the necessary amount of indentation
+        char[] spaces = new char[indentation];
+        Arrays.fill(spaces, ' ');
+        System.out.println(new String(spaces) + node.value);
+
+        
+        if(node.left != null)
+            printNode(node.left, indentation + 5); // Increment the indentation counter.
+        if(node.right != null)
+            printNode(node.right, indentation + 5); // Increment the indentation counter.
+    }
 
 }
