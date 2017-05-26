@@ -2,18 +2,17 @@ import java.util.*;
 
 public class Breeder2048{
     
-    private Tree2048 curpop[];
     private int mutateP,crossP,selParam,popSize;
     private Random random = new Random();
     
     public Breeder2048() {
-        mutateP = 4;
+        mutateP = 75;
         crossP = 5;
-        selParam = 10;
-        popSize = 1;
+        selParam = 3;
+        popSize = 50;
     }
 
-    public Tree2048 tournamentSelect(Tree2048[] curpop,int selection){
+    public Tree2048 tournamentSelect(Tree2048[] curpop, int selection){
         shufflePop(curpop);
         Tree2048 best = null;
         for (int i = 0; i < selection; i++){
@@ -54,11 +53,10 @@ public class Breeder2048{
     }
     
     public Tree2048[] createPopulation(){
-        curpop = new Tree2048[popSize];
+        Tree2048[] curpop = new Tree2048[popSize];
         TreeGenerator tg = new TreeGenerator();
         for(int i = 0; i < popSize; i++){
-            Tree2048 t = new Tree2048(TreeGenerator.Functions[random.nextInt(TreeGenerator.Functions.length)])
-            t = tg.create(t, 10);
+            Tree2048 t = tg.create(5);
             t.setDepth(depth(t,1));
             t.setScore(0);
             t.setMaxTile(2);
@@ -67,15 +65,33 @@ public class Breeder2048{
         return curpop;
     }
     
+    public void printPop(Tree2048[] pop){
+        for(int j = 0; j < pop.length; j++){
+                pop[j].postOrder(pop[j]);
+                System.out.println();
+            }
+        System.out.println();
+    }
+    
     public Tree2048[] breed(Tree2048[] pop) {
         Tree2048[] selected = new Tree2048[popSize];
         for (int i = 0; i < popSize; i++){
             selected[i] = tournamentSelect(pop,selParam);
         }
         for (int i = 0; i < popSize; i++){
-            selected[i] = selected[i].mutate(selected[i],mutateP);
+            selected[i] = selected[i].mutate(selected[i], mutateP);
         }
         return selected;
+    }
+    
+    public Tree2048 getBest(Tree2048[] pop){
+        Tree2048 bestIndividual = new Tree2048("");
+         for (int i = 0; i < popSize; i++){
+            if(pop[i].getScore() > bestIndividual.getScore()){
+                bestIndividual = pop[i];
+            }
+        }
+        return bestIndividual;
     }
 
 }

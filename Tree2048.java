@@ -1,25 +1,24 @@
 import java.util.*;
 
 public class Tree2048 implements Cloneable{
-   String value;
-   Tree2048 left, right;
-   Random random = new Random();
-   int score;
-   int maxTile;
-   int depth;
+    String value;
+    Tree2048 left, right;
+    Random random = new Random();
+    int score;
+    int maxTile;
+    int depth;
 
-   public Tree2048(String value)
-   {
-      this.value=value;
-   }   
+    public Tree2048(String value){
+        this.value=value;
+    }
 
-   public Tree2048 (String value, Tree2048 left, Tree2048 right) 
-   {
-      this.value = value;
-      this.left = left;
-      this.right = right;
-   }
-    
+    public Tree2048 (String value, Tree2048 left, Tree2048 right) 
+    {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+
     public Object clone ()
     {
         Object self = null;
@@ -34,40 +33,40 @@ public class Tree2048 implements Cloneable{
         return self;
     }
 
-   // Getter & setter for the value.
-   public String getValue(){
-      return value;}
-   public void setValue(String value){
-      this.value = value;}
+    // Getter & setter for the value.
+    public String getValue(){
+        return value;}
+    public void setValue(String value){
+        this.value = value;}
 
-   // Getters & setters for left & right nodes.
-   public Tree2048 getLeft(){
-      return left;}
-   public int getScore() {
-       return score;
-   }
+    // Getters & setters for left & right nodes.
+    public Tree2048 getLeft(){
+        return left;}
+    public int getScore() {
+        return score;
+    }
     public void setScore(int newScore) {
-       score = newScore;
-   }
+        score = newScore;
+    }
     public int getMaxTile() {
-       return maxTile;
-   }
+        return maxTile;
+    }
     public void setMaxTile(int newMaxTile) {
-       maxTile = newMaxTile;
-   }
+        maxTile = newMaxTile;
+    }
     public int getDepth() {
-       return depth;
-   }
+        return depth;
+    }
     public void setDepth(int newDepth) {
-       depth = newDepth;
-   }
-   public Tree2048 getRight(){
-      return right;}
-   public void setLeft(Tree2048 ln){
-      left = ln;}
-   public void setRight(Tree2048 rn){
-      right = rn;}
-    
+        depth = newDepth;
+    }
+    public Tree2048 getRight(){
+        return right;}
+    public void setLeft(Tree2048 ln){
+        left = ln;}
+    public void setRight(Tree2048 rn){
+        right = rn;}
+
     public int evaluate(){
         switch(this.value) {
             case "+":{ 
@@ -126,15 +125,12 @@ public class Tree2048 implements Cloneable{
             }
             case "right":{
                 return Game2048.senseRight();
-               
             }
             case "left":{
                 return Game2048.senseLeft();
-                
             }
             case "up":{
                 return Game2048.senseUp();
-                
             }
             case "down":{
                 return Game2048.senseDown();
@@ -142,7 +138,7 @@ public class Tree2048 implements Cloneable{
         }
         return random.nextInt(4);
     }
-    
+
     public Tree2048 mutate(Tree2048 t, int rate){
         if(!(t.value.equals("right")) && !(t.value.equals("left")) && !(t.value.equals("up")) && !(t.value.equals("down"))) {
             int wayChoice = random.nextInt(2);
@@ -159,41 +155,41 @@ public class Tree2048 implements Cloneable{
                 int altered = random.nextInt(4);
                 switch(altered){
                     case 0: {
-                        t.value = "up";
-                        return t;
-                    }
+                    t.value = "up";
+                    return t;
+                }
                     case 1: {
-                        t.value = "right";
-                        return t;
-                    }
+                    t.value = "right";
+                    return t;
+                }
                     case 2: {
-                        t.value = "down";
-                        return t;
-                    }
+                    t.value = "down";
+                    return t;
+                }
                     case 3: {
-                        t.value = "left";
-                        return t;
-                    }
+                    t.value = "left";
+                    return t;
+                }
                 }
             }
         }
         return t;
     }
-    
+
     public void postOrder(Tree2048 root) {
-      
-           if (root == null)
+
+        if (root == null)
             return;
- 
+
         // first recur on left subtree
         postOrder(root.left);
- 
+
         // then recur on right subtree
         postOrder(root.right);
- 
+
         // now deal with the node
         System.out.print(root.value + " ");  
-      
+
     }
-    
-    }
+
+}

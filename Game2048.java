@@ -83,13 +83,27 @@ public class Game2048 /*extends JPanel*/{
 
     }
     
-        public void treeMove(Tree2048 t) {
-        while(!myLose){    
+    public void treeMove(Tree2048 t) {
+        int prevMove = 0;
+        int sameMoveCounter = 0;
+        while(!myLose){
+            if(sameMoveCounter >= 200)
+                myLose = true;
             if (!canMove()) {
                 myLose = true;
             }
             if(!myLose){
+                //System.out.println("gothere");
                 int move = t.evaluate();
+                
+                //System.out.println(move);
+                if(prevMove == move){
+                    sameMoveCounter++;
+                }
+                else{
+                    sameMoveCounter = 0;
+                }
+                prevMove = move;
                 switch(move){
                     case 0:
                         up();
@@ -474,27 +488,48 @@ public class Game2048 /*extends JPanel*/{
         }
     }
     
-    public Tree2048[] runGeneration(Tree2048[] pop,Game2048 game) {
+    public Tree2048[] runGeneration(Tree2048[] pop, Game2048 game) {
+        System.out.println("gothere");
         for (int i = 0; i< pop.length; i++){
-            game.treeMove(pop[i]);
-            pop[i].setScore(myScore);
-            game.resetGame();
+            int sumScore = 0;
+            for(int j = 0; j < 3; j++){
+                game.treeMove(pop[i]);
+                sumScore += myScore;
+                game.resetGame();
+            }
+            pop[i].setScore(sumScore/3);
         }
+        System.out.println("gothere1");
         return pop;
     }
     
 
     public static void main(String[] args) {
+        
         Breeder2048 breedNew = new Breeder2048();
         Tree2048[] population = breedNew.createPopulation();
-        population[0].postOrder(population[0]);
-        System.out.println(population[0].getDepth());
-//        Game2048 game2048 = new Game2048();
-//        population = game2048.runGeneration(population,game2048);
-//        population = breedNew.breed(population);
-//        for (int i = 0; i<population.length; i++){
-//            System.out.println(population[i].getScore());
-//        }
+        //population[0].postOrder(population[0]);
+        //System.out.println(population[0].getDepth());
+        
+        System.out.println("Initial pop: \n");
+        breedNew.printPop(population);
+        
+        Game2048 game2048 = new Game2048();
+        for(int i = 0; i < 50; i++){
+            population = game2048.runGeneration(population,game2048);
+            population = breedNew.breed(population);
+            
+            /*
+            for(int j = 0; j < population.length; j++){
+                population[j].postOrder(population[j]);
+                System.out.print("" + population[j].getScore() + " ");
+            }
+            */
+            System.out.println("\nBest: " + breedNew.getBest(population).getScore());
+        }
+        
+        System.out.println("Final pop: \n");
+        breedNew.printPop(population);
     }
         
         

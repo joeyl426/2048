@@ -7,7 +7,7 @@ public class TreeGenerator {
     
     public static Tree2048 create(int maxDepth) {
         int end = random.nextInt(10);
-        if (maxDepth > 1 && (end > 3)) {
+        if (maxDepth > 1 && (end > 4)) {
             String function = Functions[random.nextInt(Functions.length)];
             return new Tree2048(function, create(maxDepth - 1), create(maxDepth - 1));
         }
@@ -18,8 +18,8 @@ public class TreeGenerator {
     }
     
     public static void main(String[] args) {
-//        Tree2048 tree = create(5);
-//        tree.postOrder(tree);
+        Tree2048 tree = create(5);
+        tree.postOrder(tree);
     }
 
 }
