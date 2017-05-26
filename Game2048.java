@@ -354,6 +354,18 @@ public class Game2048 /*extends JPanel*/{
     public int getMyScore() {
         return myScore;
     }
+    
+    public int getMaxTile(){
+        int maxtile = 2;
+        for (int i = 0; i<4; i++){
+            for (int j = 0; j<4; j++) {
+                if (tileAt(i,j).value > maxtile) {
+                    maxtile = tileAt(i,j).value;
+                }
+            }
+        }
+        return maxtile;
+    }
 
 /*
     @Override
@@ -475,12 +487,14 @@ public class Game2048 /*extends JPanel*/{
     public static void main(String[] args) {
         Breeder2048 breedNew = new Breeder2048();
         Tree2048[] population = breedNew.createPopulation();
-        Game2048 game2048 = new Game2048();
-        population = game2048.runGeneration(population,game2048);
-        population = breedNew.breed(population);
-        for (int i = 0; i<population.length; i++){
-            System.out.println(population[i].getScore());
-        }
+        population[0].postOrder(population[0]);
+        System.out.println(population[0].getDepth());
+//        Game2048 game2048 = new Game2048();
+//        population = game2048.runGeneration(population,game2048);
+//        population = breedNew.breed(population);
+//        for (int i = 0; i<population.length; i++){
+//            System.out.println(population[i].getScore());
+//        }
     }
         
         

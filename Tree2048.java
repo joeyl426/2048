@@ -5,6 +5,8 @@ public class Tree2048 implements Cloneable{
    Tree2048 left, right;
    Random random = new Random();
    int score;
+   int maxTile;
+   int depth;
 
    public Tree2048(String value)
    {
@@ -46,6 +48,18 @@ public class Tree2048 implements Cloneable{
    }
     public void setScore(int newScore) {
        score = newScore;
+   }
+    public int getMaxTile() {
+       return maxTile;
+   }
+    public void setMaxTile(int newMaxTile) {
+       maxTile = newMaxTile;
+   }
+    public int getDepth() {
+       return depth;
+   }
+    public void setDepth(int newDepth) {
+       depth = newDepth;
    }
    public Tree2048 getRight(){
       return right;}
@@ -181,39 +195,5 @@ public class Tree2048 implements Cloneable{
         System.out.print(root.value + " ");  
       
     }
-    
-    public String printTree() {
-        switch(this.value) {
-            case "+":{
-                return left.printTree() + " " + "+" + " " + right.printTree();
-            }
-            case "-":{
-                return left.printTree() + " " + "-" + " " + right.printTree();
-            }  
-            case "max":{
-                return left.printTree() + " " + "max" + " " + right.printTree();
-            }  
-            case "min":{
-                return left.printTree() + " " + "min" + " " + right.printTree();
-            }  
-            case "rand":{
-                return left.printTree() + " " + "rand" + " " + right.printTree();
-            }
-            case "right": {
-                return "right";
-            }
-            case "left": {
-                return "left";
-            }
-            case "up":{
-                return "up";
-            }
-            case "down":{
-                return "down";
-            }
-        }
-        return "null";
-    }
-    
     
     }

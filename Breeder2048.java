@@ -10,7 +10,7 @@ public class Breeder2048{
         mutateP = 4;
         crossP = 5;
         selParam = 10;
-        popSize = 50;
+        popSize = 1;
     }
 
     public Tree2048 tournamentSelect(Tree2048[] curpop,int selection){
@@ -41,12 +41,27 @@ public class Breeder2048{
         }
     }
     
+    public int depth(Tree2048 tree,int d) {
+        int leftDepth = d, rightDepth = d;
+        if(tree.getLeft() != null){
+            leftDepth = depth(tree.getLeft(), d+1);
+        }
+        if(tree.getRight() != null){
+            rightDepth = depth(tree.getRight(), d+1);
+        }
+
+        return leftDepth > rightDepth ? leftDepth : rightDepth;
+    }
+    
     public Tree2048[] createPopulation(){
         curpop = new Tree2048[popSize];
         TreeGenerator tg = new TreeGenerator();
         for(int i = 0; i < popSize; i++){
-            Tree2048 t = tg.create(10);
+            Tree2048 t = new Tree2048(TreeGenerator.Functions[random.nextInt(TreeGenerator.Functions.length)])
+            t = tg.create(t, 10);
+            t.setDepth(depth(t,1));
             t.setScore(0);
+            t.setMaxTile(2);
             curpop[i] = t;
         }
         return curpop;
