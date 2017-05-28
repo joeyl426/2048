@@ -98,7 +98,7 @@ public class Game2048 /*extends JPanel*/{
                 int move = t.evaluate();
                 
                 //System.out.println(move);
-                if(prevMove == move){
+                if(prevMove == move && prevScore == myScore){
                     sameMoveCounter++;
                 }
                 else{
@@ -515,12 +515,15 @@ public class Game2048 /*extends JPanel*/{
         //population[0].postOrder(population[0]);
         //System.out.println(population[0].getDepth());
         
+        Tree2048 bestOfRun = new Tree2048("");
+        
         System.out.println("Initial pop: \n");
         breedNew.printPop(population);
         
         Game2048 game2048 = new Game2048();
-        for(int i = 0; i < 25; i++){
-            population = game2048.runGeneration(population,game2048, 10);
+        for(int i = 0; i < 20; i++){
+            
+            population = game2048.runGeneration(population,game2048, 7);
             population = breedNew.breed(population);
             
             /*
@@ -531,15 +534,22 @@ public class Game2048 /*extends JPanel*/{
             */
             
             System.out.println("\n\n Generation " + (i + 1) + "\n---------------");
+           // breedNew.printPopWithScore(population);
             System.out.print("Best individual:\n");
-            breedNew.getBest(population).printTree(breedNew.getBest(population));
-            System.out.println("\nScore: " + breedNew.getBest(population).getScore());
-            System.out.println("Best tile: " + breedNew.getBest(population).getMaxTile() + "\n");
+            Tree2048 best = breedNew.getBest(population);
+            if(bestOfRun.getScore() < best.getScore()){
+                bestOfRun = (Tree2048)best.clone();
+            }
+            Tree2048.printTree(best);
+            System.out.println("\nScore: " + best.getScore());
+            System.out.println("Best tile: " + best.getMaxTile() + "\n");
         }
         
         System.out.println("Final pop: \n");
         breedNew.printPop(population);
-        
+        System.out.println("Best individual of run: ");
+        Tree2048.printTree(bestOfRun);
+        System.out.println("Score: " + bestOfRun.getScore());    
     }
         
         

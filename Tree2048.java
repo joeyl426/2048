@@ -4,7 +4,7 @@ public class Tree2048 implements Cloneable{
     String value;
     Tree2048 left, right;
     Random random = new Random();
-    int score;
+    int score = 0;
     int maxTile;
     int depth;
 
@@ -176,7 +176,7 @@ public class Tree2048 implements Cloneable{
         return t;
     }
 
-    public void postOrder(Tree2048 root) {
+    public static void postOrder(Tree2048 root) {
 
         if (root == null)
             return;
@@ -192,12 +192,12 @@ public class Tree2048 implements Cloneable{
 
     }
     
-    public void printTree(Tree2048 node)
+    public static void printTree(Tree2048 node)
     {
         printNode(node, 0);
     }
 
-    private void printNode(Tree2048 node, int indentation)
+    private static void printNode(Tree2048 node, int indentation)
     {
         // Print the value to the console/file/whatever
         // This prefixes the value with the necessary amount of indentation
