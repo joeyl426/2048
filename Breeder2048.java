@@ -8,9 +8,9 @@ public class Breeder2048{
     public Breeder2048() {
         mutateP = 10;
         crossP = 5;
-        selParam = 7;
-        popSize = 50;
-        treeDepth = 7;
+        selParam = 3;
+        popSize = 100;
+        treeDepth = 5;
     }
 
     public Tree2048 tournamentSelect(Tree2048[] curpop, int selection){

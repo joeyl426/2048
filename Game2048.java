@@ -85,9 +85,10 @@ public class Game2048 /*extends JPanel*/{
     
     public void treeMove(Tree2048 t) {
         int prevMove = 0;
+        int prevScore = 0;
         int sameMoveCounter = 0;
         while(!myLose){
-            if(sameMoveCounter >= 200)
+            if(sameMoveCounter >= 200 && myScore == prevScore)
                 myLose = true;
             if (!canMove()) {
                 myLose = true;
@@ -125,6 +126,7 @@ public class Game2048 /*extends JPanel*/{
                 myLose = true;
                 
             }
+            prevScore = myScore;
         }
     }
     
