@@ -21,6 +21,7 @@ public class TreeGenerator {
         Tree2048 t = create(5);
         System.out.println("t1: ");
         t.printTree();
+        System.out.println("After picking random");
         t.pickRandomNode(2, t, t).printTree();
         Tree2048 t1 = create(5);
         System.out.println("t2: ");

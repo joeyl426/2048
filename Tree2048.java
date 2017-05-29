@@ -197,11 +197,12 @@ public class Tree2048 implements Cloneable{
     public Tree2048 pickRandomNode(int count, Tree2048 selected, Tree2048 t){
         int choose = random.nextInt(count);
         if(choose == 1){
-            selected = this;
             if(t.right != null){
+                selected = t.right;
                 pickRandomNode(count+1,selected,t.right);
             }
             if(t.left != null){
+                selected = t.left;
                 pickRandomNode(count+1,selected,t.left);
             }
         }
@@ -216,12 +217,12 @@ public class Tree2048 implements Cloneable{
         return selected;
     }
     
-    public int size(){
-        if(this.left != null{
-            return 1 + this.left.size();   
-        }
-        
-    }
+//    public int size(){
+//        if(this.left != null{
+//            return 1 + this.left.size();   
+//        }
+//        
+//    }
     
     public int getFitness(){
         return (score/10 + maxTile);
