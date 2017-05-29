@@ -21,14 +21,18 @@ public class TreeGenerator {
         Tree2048 t = create(5);
         System.out.println("t1: ");
         t.printTree();
-        System.out.println("After picking random");
-        t.pickRandomNode(2, t, t).printTree();
+        
         Tree2048 t1 = create(5);
-        System.out.println("t2: ");
+        System.out.println("\n\nt2: ");
         t1.printTree();
+       
+        
+        
         t.crossover(100, t1);
-        System.out.println("t1 after crossover: ");
+        System.out.println("\n\nt1 after crossover: ");
         t.printTree();
+        System.out.println("\n\nt2 after crossover: ");
+        t1.printTree();
         
     }
 

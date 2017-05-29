@@ -12,8 +12,7 @@ public class Tree2048 implements Cloneable{
         this.value=value;
     }
 
-    public Tree2048 (String value, Tree2048 left, Tree2048 right) 
-    {
+    public Tree2048 (String value, Tree2048 left, Tree2048 right){
         this.value = value;
         this.left = left;
         this.right = right;
@@ -184,37 +183,42 @@ public class Tree2048 implements Cloneable{
     public void crossover(int rate, Tree2048 t){
         int alter = random.nextInt(100);
         if(alter < rate){
-            Tree2048 point1 = pickRandomNode(2,this,this);
-            Tree2048 point2 = pickRandomNode(2,t,t);
-
+            Tree2048 point1 = pickRandomNode(this,this);
+            System.out.println("t1 chosen point: " + point1.value);
+            Tree2048 point2 = pickRandomNode(t,t);
+            System.out.println("t2 chosen point: " + point2.value);
 
             Tree2048 temp = (Tree2048)point1.clone();
             point1 = point2;
+            System.out.println("point1 after changing: "+ point1.value);
             point2 = temp;
         }
     }
     
-    public Tree2048 pickRandomNode(int count, Tree2048 selected, Tree2048 t){
-        int choose = random.nextInt(count);
+    public Tree2048 pickRandomNode(Tree2048 selected, Tree2048 t){
+        int choose = random.nextInt(2);
+        int leftright = random.nextInt(2);
         if(choose == 1){
-            if(t.right != null){
-                selected = t.right;
-                pickRandomNode(count+1,selected,t.right);
+            if(leftright == 0 && t.right != null){
+                selected = t;
+                return pickRandomNode(selected,t.right);
             }
-            if(t.left != null){
-                selected = t.left;
-                pickRandomNode(count+1,selected,t.left);
+            if(leftright == 1 && t.left != null){
+                selected = t;
+                return pickRandomNode(selected,t.left);
             }
+            return selected;
         }
         else{
-           if(t.right != null){
-                pickRandomNode(count+1,selected,t.right);
+           if(leftright == 0 && t.right != null){
+                return pickRandomNode(selected,t.right);
             }
-            if(t.left != null){
-                pickRandomNode(count+1,selected,t.left);
+            if(leftright == 1 && t.left != null){
+                return pickRandomNode(selected,t.left);
             }
+            return selected;
         }
-        return selected;
+        
     }
     
 //    public int size(){
