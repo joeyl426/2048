@@ -146,7 +146,7 @@ public class Tree2048 implements Cloneable{
                 this.left.mutate(rate);
             }
             else {
-                this.left.mutate(rate);
+                this.right.mutate(rate);
             }
         }
         else{
@@ -181,61 +181,37 @@ public class Tree2048 implements Cloneable{
     }
     
     
-    private void crossover(Tree2048 t, int rate){
+    public void crossover(int rate, Tree2048 t){
+        boolean foundPoint = false;
+        while(foundPoint == false){
+            
+            
+        }
         if(this.isFunction()) {
             int wayChoice = random.nextInt(2);
-            if (wayChoice == 1){
-                this.left.mutate(rate);
+            int alter = random.nextInt(100);
+            if(alter < rate){
+                
             }
-            else {
-                this.left.mutate(rate);
+            else{
+                if (wayChoice == 1){
+                    this.left.crossover(rate,t);
+                }
+                else {
+                    this.right.crossover(rate,t);
+                }
             }
         }
         else{
-            int alter = random.nextInt(100);
-            if (alter < rate) {
-                int altered = random.nextInt(4);
-                switch(altered){
-                        case 0: {
-                        this.value = "up";
-                        break;
-                    }
-                        case 1: {
-                        this.value = "right";
-                        break;
-                    }
-                        case 2: {
-                        this.value = "down";
-                        break;
-                    }
-                        case 3: {
-                        this.value = "left";
-                        break;
-                    }
-                }
-            }
+            return;
         }
         
     }
     
-    
-    public int maxDepth(Tree2048 t) 
-    {
-        if (t == null)
-            return 0;
-        else
-        {
-            /* compute the depth of each subtree */
-            int lDepth = maxDepth(t.left);
-            int rDepth = maxDepth(t.right);
-  
-            /* use the larger one */
-            if (lDepth > rDepth)
-                return (lDepth + 1);
-             else
-                return (rDepth + 1);
-        }
+    public int getFitness(){
+        return (score/10 + maxTile);
     }
+    
 
     public void postOrder() {
         // first recur on left subtree

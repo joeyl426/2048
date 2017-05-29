@@ -543,13 +543,15 @@ public class Game2048 /*extends JPanel*/{
             best.printTree();
             System.out.println("\nScore: " + best.getScore());
             System.out.println("Best tile: " + best.getMaxTile() + "\n");
+            System.out.println("Fitness: " + best.getFitness());
         }
         
         System.out.println("Final pop: \n");
         breedNew.printPop(population);
         System.out.println("Best individual of run: ");
         bestOfRun.printTree();
-        System.out.println("Score: " + bestOfRun.getScore());    
+        System.out.println("Score: " + bestOfRun.getScore());
+        System.out.println("\nFitness: " + bestOfRun.getFitness());
     }
         
         

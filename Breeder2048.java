@@ -20,7 +20,7 @@ public class Breeder2048{
             if (best == null) {
                 best = curpop[i];
             }
-            else if (best.getScore() < curpop[i].getScore()) {
+            else if (best.getFitness() < curpop[i].getFitness()) {
                 best = curpop[i];
             }
         }
@@ -97,7 +97,7 @@ public class Breeder2048{
     public Tree2048 getBest(Tree2048[] pop){
         Tree2048 bestIndividual = new Tree2048("");
          for (int i = 0; i < popSize; i++){
-            if(pop[i].getScore() > bestIndividual.getScore()){
+            if(pop[i].getFitness() > bestIndividual.getFitness()){
                 bestIndividual = pop[i];
             }
         }
