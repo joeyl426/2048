@@ -18,8 +18,17 @@ public class TreeGenerator {
     }
     
     public static void main(String[] args) {
-        Tree2048 tree = create(5);
-        tree.printTree();
+        Tree2048 t = create(5);
+        System.out.println("t1: ");
+        t.printTree();
+        t.pickRandomNode(2, t, t).printTree();
+        Tree2048 t1 = create(5);
+        System.out.println("t2: ");
+        t1.printTree();
+        t.crossover(100, t1);
+        System.out.println("t1 after crossover: ");
+        t.printTree();
+        
     }
 
 }

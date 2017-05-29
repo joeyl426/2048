@@ -182,28 +182,43 @@ public class Tree2048 implements Cloneable{
     
     
     public void crossover(int rate, Tree2048 t){
-        boolean foundPoint = false;
-        while(foundPoint == false){
-            
-            
+        int alter = random.nextInt(100);
+        if(alter < rate){
+            Tree2048 point1 = pickRandomNode(2,this,this);
+            Tree2048 point2 = pickRandomNode(2,t,t);
+
+
+            Tree2048 temp = (Tree2048)point1.clone();
+            point1 = point2;
+            point2 = temp;
         }
-        if(this.isFunction()) {
-            int wayChoice = random.nextInt(2);
-            int alter = random.nextInt(100);
-            if(alter < rate){
-                
+    }
+    
+    public Tree2048 pickRandomNode(int count, Tree2048 selected, Tree2048 t){
+        int choose = random.nextInt(count);
+        if(choose == 1){
+            selected = this;
+            if(t.right != null){
+                pickRandomNode(count+1,selected,t.right);
             }
-            else{
-                if (wayChoice == 1){
-                    this.left.crossover(rate,t);
-                }
-                else {
-                    this.right.crossover(rate,t);
-                }
+            if(t.left != null){
+                pickRandomNode(count+1,selected,t.left);
             }
         }
         else{
-            return;
+           if(t.right != null){
+                pickRandomNode(count+1,selected,t.right);
+            }
+            if(t.left != null){
+                pickRandomNode(count+1,selected,t.left);
+            }
+        }
+        return selected;
+    }
+    
+    public int size(){
+        if(this.left != null{
+            return 1 + this.left.size();   
         }
         
     }

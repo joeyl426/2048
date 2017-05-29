@@ -88,8 +88,10 @@ public class Breeder2048{
         for (int i = 0; i < popSize; i++){
             selected[i] = tournamentSelect(pop,selParam);
         }
-        for (int i = 0; i < popSize; i++){
+        selected[0].mutate(mutateP);
+        for (int i = 1; i < popSize; i++){
             selected[i].mutate(mutateP);
+            selected[i].crossover(crossP, selected[i - 1]);
         }
         return selected;
     }
