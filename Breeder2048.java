@@ -8,7 +8,7 @@ public class Breeder2048{
     public Breeder2048() {
         mutateP = 30;
         crossP = 5;
-        selParam = 2;
+        selParam = 5;
         popSize = 65;
         treeDepth = 6;
     }
@@ -68,7 +68,7 @@ public class Breeder2048{
     
     public void printPop(Tree2048[] pop){
         for(int j = 0; j < pop.length; j++){
-                Tree2048.postOrder(pop[j]);
+                pop[j].postOrder();
                 System.out.println();
             }
         System.out.println();
@@ -76,7 +76,7 @@ public class Breeder2048{
     
         public void printPopWithScore(Tree2048[] pop){
         for(int j = 0; j < pop.length; j++){
-                Tree2048.postOrder(pop[j]);
+                pop[j].postOrder();
                 System.out.print("Score: " + pop[j].getScore());
                 System.out.println();
             }
@@ -89,7 +89,7 @@ public class Breeder2048{
             selected[i] = tournamentSelect(pop,selParam);
         }
         for (int i = 0; i < popSize; i++){
-            selected[i] = selected[i].mutate(selected[i], mutateP);
+            selected[i].mutate(mutateP);
         }
         return selected;
     }
@@ -115,7 +115,7 @@ public class Breeder2048{
         System.out.println();
         b.printPop(pop);
         Tree2048 selected = b.tournamentSelect(pop, 3);
-        selected.postOrder(selected);
+        selected.postOrder();
         
     }
 

@@ -139,14 +139,14 @@ public class Tree2048 implements Cloneable{
         return random.nextInt(4);
     }
 
-    public Tree2048 mutate(Tree2048 t, int rate){
-        if(!(t.value.equals("right")) && !(t.value.equals("left")) && !(t.value.equals("up")) && !(t.value.equals("down"))) {
+    public void mutate(int rate){
+        if(this.isFunction()) {
             int wayChoice = random.nextInt(2);
             if (wayChoice == 1){
-                mutate(t.left,rate);
+                this.left.mutate(rate);
             }
             else {
-                mutate(t.right,rate);
+                this.left.mutate(rate);
             }
         }
         else{
@@ -154,62 +154,121 @@ public class Tree2048 implements Cloneable{
             if (alter < rate) {
                 int altered = random.nextInt(4);
                 switch(altered){
-                    case 0: {
-                    t.value = "up";
-                    return t;
-                }
-                    case 1: {
-                    t.value = "right";
-                    return t;
-                }
-                    case 2: {
-                    t.value = "down";
-                    return t;
-                }
-                    case 3: {
-                    t.value = "left";
-                    return t;
-                }
+                        case 0: {
+                        this.value = "up";
+                        break;
+                    }
+                        case 1: {
+                        this.value = "right";
+                        break;
+                    }
+                        case 2: {
+                        this.value = "down";
+                        break;
+                    }
+                        case 3: {
+                        this.value = "left";
+                        break;
+                    }
                 }
             }
         }
-        return t;
+        
+    }
+    
+    public boolean isFunction(){
+        return (!(this.value.equals("right")) && !(this.value.equals("left")) && !(this.value.equals("up")) && !(this.value.equals("down")));
+    }
+    
+    
+    private void crossover(Tree2048 t, int rate){
+        if(this.isFunction()) {
+            int wayChoice = random.nextInt(2);
+            if (wayChoice == 1){
+                this.left.mutate(rate);
+            }
+            else {
+                this.left.mutate(rate);
+            }
+        }
+        else{
+            int alter = random.nextInt(100);
+            if (alter < rate) {
+                int altered = random.nextInt(4);
+                switch(altered){
+                        case 0: {
+                        this.value = "up";
+                        break;
+                    }
+                        case 1: {
+                        this.value = "right";
+                        break;
+                    }
+                        case 2: {
+                        this.value = "down";
+                        break;
+                    }
+                        case 3: {
+                        this.value = "left";
+                        break;
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    
+    public int maxDepth(Tree2048 t) 
+    {
+        if (t == null)
+            return 0;
+        else
+        {
+            /* compute the depth of each subtree */
+            int lDepth = maxDepth(t.left);
+            int rDepth = maxDepth(t.right);
+  
+            /* use the larger one */
+            if (lDepth > rDepth)
+                return (lDepth + 1);
+             else
+                return (rDepth + 1);
+        }
     }
 
-    public static void postOrder(Tree2048 root) {
-
-        if (root == null)
-            return;
-
+    public void postOrder() {
         // first recur on left subtree
-        postOrder(root.left);
-
+        if(this.left != null){
+            this.left.postOrder();
+        }
         // then recur on right subtree
-        postOrder(root.right);
-
+        if(this.right != null){
+            this.right.postOrder();
+        }
         // now deal with the node
-        System.out.print(root.value + " ");  
+        System.out.print(this.value + " ");  
 
     }
     
-    public static void printTree(Tree2048 node)
+    public void printTree()
     {
-        printNode(node, 0);
+        printNode(0);
     }
 
-    private static void printNode(Tree2048 node, int indentation)
+    private void printNode(int indentation)
     {
         // Print the value to the console/file/whatever
         // This prefixes the value with the necessary amount of indentation
         char[] spaces = new char[indentation];
         Arrays.fill(spaces, ' ');
-        System.out.println(new String(spaces) + node.value);
+        System.out.println(new String(spaces) + this.value);
 
         
-        if(node.left != null)
-            printNode(node.left, indentation + 5); // Increment the indentation counter.
-        if(node.right != null)
-            printNode(node.right, indentation + 5); // Increment the indentation counter.
+        if(this.left != null)
+            this.left.printNode(indentation + 5); // Increment the indentation counter.
+        if(this.right != null)
+            this.right.printNode(indentation + 5); // Increment the indentation counter.
     }
 
 }

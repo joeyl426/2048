@@ -536,11 +536,11 @@ public class Game2048 /*extends JPanel*/{
             System.out.println("\n\n Generation " + (i + 1) + "\n---------------");
            // breedNew.printPopWithScore(population);
             System.out.print("Best individual:\n");
-            Tree2048 best = breedNew.getBest(population);
+            Tree2048 best = (Tree2048)breedNew.getBest(population).clone();
             if(bestOfRun.getScore() < best.getScore()){
                 bestOfRun = (Tree2048)best.clone();
             }
-            Tree2048.printTree(best);
+            best.printTree();
             System.out.println("\nScore: " + best.getScore());
             System.out.println("Best tile: " + best.getMaxTile() + "\n");
         }
@@ -548,7 +548,7 @@ public class Game2048 /*extends JPanel*/{
         System.out.println("Final pop: \n");
         breedNew.printPop(population);
         System.out.println("Best individual of run: ");
-        Tree2048.printTree(bestOfRun);
+        bestOfRun.printTree();
         System.out.println("Score: " + bestOfRun.getScore());    
     }
         

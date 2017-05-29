@@ -19,7 +19,7 @@ public class TreeGenerator {
     
     public static void main(String[] args) {
         Tree2048 tree = create(5);
-        tree.printTree(tree);
+        tree.printTree();
     }
 
 }
