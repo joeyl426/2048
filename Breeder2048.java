@@ -13,20 +13,36 @@ public class Breeder2048{
         treeDepth = 6;
     }
 
-    public Tree2048 tournamentSelect(Tree2048[] curpop, int selection){
+    public Tree2048 tournamentSelectScore(Tree2048[] curpop, int selection){
         shufflePop(curpop);
         Tree2048 best = null;
         for (int i = 0; i < selection; i++){
             if (best == null) {
                 best = curpop[i];
             }
-            else if (best.getFitness() < curpop[i].getFitness()) {
+            else if (best.getScore() < curpop[i].getScore()) {
                 best = curpop[i];
             }
         }
         best = (Tree2048)best.clone();
         return best;
     }
+    
+    public Tree2048 tournamentSelectMaxTile(Tree2048[] curpop, int selection){
+        shufflePop(curpop);
+        Tree2048 best = null;
+        for (int i = 0; i < selection; i++){
+            if (best == null) {
+                best = curpop[i];
+            }
+            else if (best.getMaxTile() < curpop[i].getMaxTile()) {
+                best = curpop[i];
+            }
+        }
+        best = (Tree2048)best.clone();
+        return best;
+    }
+    
 
     public void shufflePop(Tree2048[] curpop) {
         int randIndex;
@@ -85,13 +101,19 @@ public class Breeder2048{
     
     public Tree2048[] breed(Tree2048[] pop) {
         Tree2048[] selected = new Tree2048[popSize];
-        for (int i = 0; i < popSize; i++){
-            selected[i] = tournamentSelect(pop,selParam);
+        //Perform selection based on score for first half of pop
+        for (int i = 0; i < popSize/2; i++){
+            selected[i] = tournamentSelectScore(pop,selParam);
         }
+        //Perform selection based on max tile for second half of pop
+        for (int i = popSize/2; i < popSize; i++){
+            selected[i] = tournamentSelectMaxTile(pop,selParam);
+        }
+        shufflePop(selected);
         selected[0].mutate(mutateP);
         for (int i = 1; i < popSize; i++){
             selected[i].mutate(mutateP);
-            selected[i].crossover(crossP, selected[i - 1]);
+            //selected[i].crossover(crossP, selected[i - 1]);
         }
         return selected;
     }
@@ -116,8 +138,8 @@ public class Breeder2048{
         System.out.println();
         System.out.println();
         b.printPop(pop);
-        Tree2048 selected = b.tournamentSelect(pop, 3);
-        selected.postOrder();
+        //Tree2048 selected = b.tournamentSelect(pop, 3);
+        //selected.postOrder();
         
     }
 

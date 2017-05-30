@@ -543,7 +543,6 @@ public class Game2048 /*extends JPanel*/{
             best.printTree();
             System.out.println("\nScore: " + best.getScore());
             System.out.println("Best tile: " + best.getMaxTile() + "\n");
-            System.out.println("Fitness: " + best.getFitness());
         }
         
         System.out.println("Final pop: \n");
@@ -551,7 +550,7 @@ public class Game2048 /*extends JPanel*/{
         System.out.println("Best individual of run: ");
         bestOfRun.printTree();
         System.out.println("Score: " + bestOfRun.getScore());
-        System.out.println("\nFitness: " + bestOfRun.getFitness());
+        System.out.println("\nMax Tile: " + bestOfRun.getMaxTile());
     }
         
         
