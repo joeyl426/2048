@@ -5,11 +5,11 @@ public class TreeGenerator {
     public static final String[] Terminals = {"up", "down", "left","right"};
     private static Random random = new Random();
     
-    public static Tree2048 create(int maxDepth) {
+    public static Tree2048 create(int minDepth, int maxDepth, int curDepth) {
         int end = random.nextInt(10);
-        if (maxDepth > 1 && (end > 4)) {
+        if ((maxDepth > 1 && (end > 4)) || minDepth > curDepth) {
             String function = Functions[random.nextInt(Functions.length)];
-            return new Tree2048(function, create(maxDepth - 1), create(maxDepth - 1));
+            return new Tree2048(function, create(minDepth, maxDepth - 1, curDepth + 1), create(minDepth, maxDepth - 1, curDepth + 1));
         }
         else {
             String terminal = Terminals[random.nextInt(Terminals.length)];
@@ -18,11 +18,11 @@ public class TreeGenerator {
     }
     
     public static void main(String[] args) {
-        Tree2048 t = create(5);
+        Tree2048 t = create(5,5,1);
         System.out.println("t1: ");
         t.printTree();
         
-        Tree2048 t1 = create(5);
+        Tree2048 t1 = create(5,5,1);
         System.out.println("\n\nt2: ");
         t1.printTree();
        
