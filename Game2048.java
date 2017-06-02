@@ -29,15 +29,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Konstantin Bulenkov
  */
-public class Game2048 /*extends JPanel*/{
-    
-    /*
-    private static final Color BG_COLOR = new Color(0xbbada0);
-    private static final String FONT_NAME = "Arial";
-    private static final int TILE_SIZE = 64;
-    private static final int TILES_MARGIN = 16;
-    */
 
+public class Game2048{
+    
     private static Tile[] myTiles;
     boolean myWin = false;
     boolean myLose = false;
@@ -45,9 +39,7 @@ public class Game2048 /*extends JPanel*/{
     Random rand = new Random();
 
     public Game2048() {
-        resetGame();
-        //setPreferredSize(new Dimension(340, 400));
-        //setFocusable(true);  
+        resetGame();  
     }
 
     public void randomMove() {
@@ -77,10 +69,7 @@ public class Game2048 /*extends JPanel*/{
             if (!myWin && !canMove()) {
                 myLose = true;
             }
-
-            //repaint();
         }
-
     }
     
     public void treeMove(Tree2048 t) {
@@ -330,7 +319,7 @@ public class Game2048 /*extends JPanel*/{
         int move = randMove.nextInt(4);
         return move;
     }
-    /*Returns trye if anything can be combined in any 4 of the lines */ 
+    /*Returns true if anything can be combined in any 4 of the lines */ 
     private static boolean lineSense(Tile[] oldLine){
         for (int i = 0; i < 4 && !oldLine[i].isEmpty(); i++) {
             int num = oldLine[i].value;
@@ -383,76 +372,6 @@ public class Game2048 /*extends JPanel*/{
         return maxtile;
     }
 
-/*
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        g.setColor(BG_COLOR);
-        g.fillRect(0, 0, this.getSize().width, this.getSize().height);
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                drawTile(g, myTiles[x + y * 4], x, y);
-            }
-        }
-    }
-    
-*/    
-
-
-/*
-    private void drawTile(Graphics g2, Tile tile, int x, int y) {
-        Graphics2D g = ((Graphics2D) g2);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
-        int value = tile.value;
-        int xOffset = offsetCoors(x);
-        int yOffset = offsetCoors(y);
-        g.setColor(tile.getBackground());
-        g.fillRoundRect(xOffset, yOffset, TILE_SIZE, TILE_SIZE, 14, 14);
-        g.setColor(tile.getForeground());
-        final int size = value < 100 ? 36 : value < 1000 ? 32 : 24;
-        final Font font = new Font(FONT_NAME, Font.BOLD, size);
-        g.setFont(font);
-
-        String s = String.valueOf(value);
-        final FontMetrics fm = getFontMetrics(font);
-
-        final int w = fm.stringWidth(s);
-        final int h = -(int) fm.getLineMetrics(s, g).getBaselineOffsets()[2];
-
-        if (value != 0)
-            g.drawString(s, xOffset + (TILE_SIZE - w) / 2, yOffset + TILE_SIZE - (TILE_SIZE - h) / 2 - 2);
-
-        if (myWin || myLose) {
-            g.setColor(new Color(255, 255, 255, 30));
-            g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(new Color(78, 139, 202));
-            g.setFont(new Font(FONT_NAME, Font.BOLD, 48));
-            if (myWin) {
-                g.drawString("You won!", 68, 150);
-            }
-            if (myLose) {
-                g.drawString("Game over!", 50, 130);
-                g.drawString("You lose!", 64, 200);
-            }
-            if (myWin || myLose) {
-                g.setFont(new Font(FONT_NAME, Font.PLAIN, 16));
-                g.setColor(new Color(128, 128, 128, 128));
-                g.drawString("Press ESC to play again", 80, getHeight() - 40);
-            }
-        }
-        g.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
-        g.drawString("Score: " + myScore, 200, 365);
-
-    }
-    
-    */
-
-
-//    private static int offsetCoors(int arg) {
-//        return arg * (TILES_MARGIN + TILE_SIZE) + TILES_MARGIN;
-//    }
-
     static class Tile {
         int value;
 
@@ -502,76 +421,88 @@ public class Game2048 /*extends JPanel*/{
             }
             pop[i].setScore(sumScore/numGames);
             pop[i].setMaxTile(sumMaxTile/numGames);
-//            pop[i].setScore(sumScore);
         }
         return pop;
     }
     
 
     public static void main(String[] args) {
+        int avgBestScore = 0;
+        int avgBestTile = 0;
         
-        Breeder2048 breedNew = new Breeder2048();
-        Tree2048[] population = breedNew.createPopulation();
-        //population[0].postOrder(population[0]);
-        //System.out.println(population[0].getDepth());
-        
-        Tree2048 bestOfRun = new Tree2048("");
-        
-        System.out.println("Initial pop: \n");
-        breedNew.printPop(population);
-        
-        Game2048 game2048 = new Game2048();
-        for(int i = 0; i < 20; i++){
-            
-            population = game2048.runGeneration(population,game2048, 7);
-            population = breedNew.breed(population);
-            
-            /*
-            for(int j = 0; j < population.length; j++){
-                population[j].postOrder(population[j]);
-                System.out.print("" + population[j].getScore() + " ");
+        //10 runs of the genetic program, with a new initial population each time
+        //Average score and max tile of the 10 runs is printed at the end
+        for(int j = 0; j < 10; j++){  
+            Breeder2048 breedNew = new Breeder2048();
+            Tree2048[] population = breedNew.createPopulation();      
+            Tree2048 bestOfRun = new Tree2048("");
+
+            System.out.println("Initial pop: \n");
+            breedNew.printPop(population);
+
+            Game2048 game2048 = new Game2048();
+                  
+            for(int i = 0; i < 20; i++){
+                //Breed a new population each generation
+                population = game2048.runGeneration(population,game2048, 7);
+                population = breedNew.breed(population);
+
+                //Print out results of each generation
+                System.out.println("\n\n Run " + (j+1) + ", Generation " + (i + 1) + "\n---------------");
+                System.out.print("Best individual:\n");
+                Tree2048 best = (Tree2048)breedNew.getBest(population).clone();
+                //Track best individual so far
+                if(bestOfRun.getScore() < best.getScore()){
+                    bestOfRun = (Tree2048)best.clone();
+                }
+                best.printTree();
+                System.out.println("\nScore: " + best.getScore());
+                System.out.println("Best tile: " + best.getMaxTile() + "\n");
             }
-            */
-            
-            System.out.println("\n\n Generation " + (i + 1) + "\n---------------");
-           // breedNew.printPopWithScore(population);
-            System.out.print("Best individual:\n");
-            Tree2048 best = (Tree2048)breedNew.getBest(population).clone();
-            if(bestOfRun.getScore() < best.getScore()){
-                bestOfRun = (Tree2048)best.clone();
-            }
-            best.printTree();
-            System.out.println("\nScore: " + best.getScore());
-            System.out.println("Best tile: " + best.getMaxTile() + "\n");
+
+            //Print out results of run
+            System.out.println("Final pop: \n");
+            breedNew.printPop(population);
+            System.out.println("Best individual of run: ");
+            bestOfRun.printTree();
+            System.out.println("Score: " + bestOfRun.getScore());
+            avgBestScore += bestOfRun.getScore();
+            System.out.println("\nMax Tile: " + bestOfRun.getMaxTile());
+            avgBestTile += bestOfRun.getMaxTile();
         }
         
-        System.out.println("Final pop: \n");
-        breedNew.printPop(population);
-        System.out.println("Best individual of run: ");
-        bestOfRun.printTree();
-        System.out.println("Score: " + bestOfRun.getScore());
-        System.out.println("\nMax Tile: " + bestOfRun.getMaxTile());
-    }
+        System.out.println("\nAvg best score of run: " + avgBestScore/10);
+        System.out.println("\nAvg max tile of run: " + avgBestTile/10);
+      }
         
         
         
         
-        /*
+        /* This is for running with random moves 
         int sumScores = 0;
-        for(int i = 0; i < 100; i++){
+        int sumTiles = 0;
+        for(int i = 0; i < 1000000; i++){
             Game2048 game2048 = new Game2048();
             while(!game2048.myLose){
                 game2048.randomMove();
 
             }
             sumScores += game2048.myScore;
+            sumTiles += game2048.getMaxTile();
             //System.out.println(game2048.myScore);
         }
-        int avgScore = sumScores/100;
+        int avgScore = sumScores/1000000;
+        int avgTile = sumTiles/1000000;
         System.out.println(avgScore);
+        System.out.println(avgTile);
         
-        Average over 1 million games was 1095
+        //Average over 1 million games was 1095
+        
+        
+        }
+        
         */
+        
         
 
 }

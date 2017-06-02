@@ -1,5 +1,5 @@
 import java.util.*;
-
+/*This class is solely responsible for creating random trees with a specified minimum and maximum depth*/
 public class TreeGenerator {
     public static final String[] Functions = {"+","-","rand","min","max"};
     public static final String[] Terminals = {"up", "down", "left","right"};
@@ -18,11 +18,11 @@ public class TreeGenerator {
     }
     
     public static void main(String[] args) {
-        Tree2048 t = create(5,5,1);
+        Tree2048 t = create(3,3,1);
         System.out.println("t1: ");
         t.printTree();
         
-        Tree2048 t1 = create(5,5,1);
+        Tree2048 t1 = create(3,3,1);
         System.out.println("\n\nt2: ");
         t1.printTree();
        

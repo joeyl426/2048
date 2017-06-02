@@ -1,14 +1,15 @@
 import java.util.*;
 
+/* Breeder2048 contains all of the evolutionary paramaters such as mutation probability, crossover probability, tournament size, population size, minimum and maximum depth. It also contains our two implementations of tournament selection; one which selects based on score and another that selects based on max tile. */
 public class Breeder2048{
     
-    private int mutateP,crossP,selParam,popSize,minDepth, maxDepth;
+    private int mutateP,crossP,tournamentSize,popSize,minDepth, maxDepth;
     private Random random = new Random();
     
     public Breeder2048() {
-        mutateP = 30;
+        mutateP = 100;
         crossP = 5;
-        selParam = 5;
+        tournamentSize = 5;
         popSize = 65;
         minDepth = 3;
         maxDepth = 7;
@@ -104,16 +105,17 @@ public class Breeder2048{
         Tree2048[] selected = new Tree2048[popSize];
         //Perform selection based on score for first half of pop
         for (int i = 0; i < popSize/2; i++){
-            selected[i] = tournamentSelectScore(pop,selParam);
+            selected[i] = tournamentSelectScore(pop,tournamentSize);
         }
         //Perform selection based on max tile for second half of pop
         for (int i = popSize/2; i < popSize; i++){
-            selected[i] = tournamentSelectMaxTile(pop,selParam);
+            selected[i] = tournamentSelectMaxTile(pop,tournamentSize);
         }
         shufflePop(selected);
         selected[0].mutate(mutateP);
         for (int i = 1; i < popSize; i++){
             selected[i].mutate(mutateP);
+            //crossover not working, uncomment if it works
             //selected[i].crossover(crossP, selected[i - 1]);
         }
         return selected;
