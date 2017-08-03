@@ -2,19 +2,19 @@ import java.util.*;
 
 /*This class contains all the information necessary for representing our tree. This consists of the value of the node, the left & right subtrees, the score of the tree, the max tile, and the depth. This class also contains functions used to evaluate the the output (move) of the tree, as well as functions for mutation, crossover, & visual representation of trees. We could not get crossover to work due to problems with Java passing object references in methods in a way that we did not expect, however our algorithm is there and could be fixed given more time*/
 
-public class Tree2048 implements Cloneable{
+public class Tree implements Cloneable{
     String value;
-    Tree2048 left, right;
+    Tree left, right;
     Random random = new Random();
     int score = 0;
     int maxTile;
     int depth;
 
-    public Tree2048(String value){
+    public Tree(String value){
         this.value=value;
     }
 
-    public Tree2048 (String value, Tree2048 left, Tree2048 right){
+    public Tree (String value, Tree left, Tree right){
         this.value = value;
         this.left = left;
         this.right = right;
@@ -39,7 +39,7 @@ public class Tree2048 implements Cloneable{
     public void setValue(String value){
         this.value = value;}
 
-    public Tree2048 getLeft(){
+    public Tree getLeft(){
         return left;}
     public int getScore() {
         return score;
@@ -59,11 +59,11 @@ public class Tree2048 implements Cloneable{
     public void setDepth(int newDepth) {
         depth = newDepth;
     }
-    public Tree2048 getRight(){
+    public Tree getRight(){
         return right;}
-    public void setLeft(Tree2048 ln){
+    public void setLeft(Tree ln){
         left = ln;}
-    public void setRight(Tree2048 rn){
+    public void setRight(Tree rn){
         right = rn;}
 
     //Evaluate the tree to output a move (number from 0 to 3)
@@ -124,16 +124,16 @@ public class Tree2048 implements Cloneable{
                 }
             }
             case "right":{
-                return Game2048.senseRight();
+                return Game.senseRight();
             }
             case "left":{
-                return Game2048.senseLeft();
+                return Game.senseLeft();
             }
             case "up":{
-                return Game2048.senseUp();
+                return Game.senseUp();
             }
             case "down":{
-                return Game2048.senseDown();
+                return Game.senseDown();
             }
         }
         return random.nextInt(4);
@@ -182,27 +182,7 @@ public class Tree2048 implements Cloneable{
         return (!(this.value.equals("right")) && !(this.value.equals("left")) && !(this.value.equals("up")) && !(this.value.equals("down")));
     }
     
-    //Not currently working
-    public void crossover(int rate, Tree2048 t){
-        int alter = random.nextInt(100);
-        if(alter < rate){
-            /*
-            Tree2048 point1 = pickRandomNode(this,this);
-            System.out.println("t1 chosen point: " + point1.value);
-            Tree2048 point2 = pickRandomNode(t,t);
-            System.out.println("t2 chosen point: " + point2.value);
-
-            point1 = point2;
-            System.out.println("point1 after changing: "+ point1.value);
-            point2 = temp;
-            */
-            
-            
-           // pickRandomNode(this,this) = pickRandomNode(t,t);
-        }
-    }
-    
-    public Tree2048 pickRandomNode(Tree2048 selected, Tree2048 t){
+    public Tree pickRandomNode(Tree selected, Tree t){
         int choose = random.nextInt(2);
         int leftright = random.nextInt(2);
         if(choose == 1){

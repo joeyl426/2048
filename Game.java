@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-//package com.bulenkov.game2048;
+//package com.bulenkov.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * @author Konstantin Bulenkov
  */
 
-public class Game2048{
+public class Game{
     
     private static Tile[] myTiles;
     boolean myWin = false;
@@ -38,7 +38,7 @@ public class Game2048{
     int myScore = 0;
     Random rand = new Random();
 
-    public Game2048() {
+    public Game() {
         resetGame();  
     }
 
@@ -72,7 +72,7 @@ public class Game2048{
         }
     }
     
-    public void treeMove(Tree2048 t) {
+    public void TreeMove(Tree t) {
         int prevMove = 0;
         int prevScore = 0;
         int sameMoveCounter = 0;
@@ -409,12 +409,12 @@ public class Game2048{
         }
     }
     
-    public Tree2048[] runGeneration(Tree2048[] pop, Game2048 game, int numGames) {
+    public Tree[] runGeneration(Tree[] pop, Game game, int numGames) {
         for (int i = 0; i< pop.length; i++){
             int sumScore = 0;
             int sumMaxTile = 0;
             for(int j = 0; j < numGames; j++){
-                game.treeMove(pop[i]);
+                game.TreeMove(pop[i]);
                 sumScore += myScore;
                 sumMaxTile += game.getMaxTile();
                 game.resetGame();
@@ -429,31 +429,31 @@ public class Game2048{
     public static void main(String[] args) {
         int avgBestScore = 0;
         int avgBestTile = 0;
-        
+        Breeder breeder = new Breeder();
         //10 runs of the genetic program, with a new initial population each time
         //Average score and max tile of the 10 runs is printed at the end
         for(int j = 0; j < 10; j++){  
-            Breeder2048 breedNew = new Breeder2048();
-            Tree2048[] population = breedNew.createPopulation();      
-            Tree2048 bestOfRun = new Tree2048("");
+           
+            Tree[] population = breeder.createPopulation();      
+            Tree bestOfRun = new Tree("");
 
             System.out.println("Initial pop: \n");
-            breedNew.printPop(population);
+            breeder.printPop(population);
 
-            Game2048 game2048 = new Game2048();
+            Game Game = new Game();
                   
             for(int i = 0; i < 20; i++){
                 //Breed a new population each generation
-                population = game2048.runGeneration(population,game2048, 7);
-                population = breedNew.breed(population);
+                population = Game.runGeneration(population,Game, 7);
+                population = breeder.breed(population);
 
                 //Print out results of each generation
                 System.out.println("\n\n Run " + (j+1) + ", Generation " + (i + 1) + "\n---------------");
                 System.out.print("Best individual:\n");
-                Tree2048 best = (Tree2048)breedNew.getBest(population).clone();
+                Tree best = (Tree)breeder.getBest(population).clone();
                 //Track best individual so far
                 if(bestOfRun.getScore() < best.getScore()){
-                    bestOfRun = (Tree2048)best.clone();
+                    bestOfRun = (Tree)best.clone();
                 }
                 best.printTree();
                 System.out.println("\nScore: " + best.getScore());
@@ -462,7 +462,7 @@ public class Game2048{
 
             //Print out results of run
             System.out.println("Final pop: \n");
-            breedNew.printPop(population);
+            breeder.printPop(population);
             System.out.println("Best individual of run: ");
             bestOfRun.printTree();
             System.out.println("Score: " + bestOfRun.getScore());
@@ -474,35 +474,4 @@ public class Game2048{
         System.out.println("\nAvg best score of run: " + avgBestScore/10);
         System.out.println("\nAvg max tile of run: " + avgBestTile/10);
       }
-        
-        
-        
-        
-        /* This is for running with random moves 
-        int sumScores = 0;
-        int sumTiles = 0;
-        for(int i = 0; i < 1000000; i++){
-            Game2048 game2048 = new Game2048();
-            while(!game2048.myLose){
-                game2048.randomMove();
-
-            }
-            sumScores += game2048.myScore;
-            sumTiles += game2048.getMaxTile();
-            //System.out.println(game2048.myScore);
-        }
-        int avgScore = sumScores/1000000;
-        int avgTile = sumTiles/1000000;
-        System.out.println(avgScore);
-        System.out.println(avgTile);
-        
-        //Average over 1 million games was 1095
-        
-        
-        }
-        
-        */
-        
-        
-
 }
